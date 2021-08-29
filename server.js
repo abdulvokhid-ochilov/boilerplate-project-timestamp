@@ -24,11 +24,18 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date", function (req, res) {
-  console.log(req.params.date);
-  res.json({
-    unix: Date.now(),
-    utc: new Date().toGMTString(),
-  });
+  const date = new Date(req.params.date);
+
+  if (date == "Invalid Date") {
+    res.json({
+      error: "Invalid Date",
+    });
+  } else {
+    res.json({
+      unix: date.getTime(),
+      utc: date.toGMTString(),
+    });
+  }
 });
 
 app.get("/api", function (req, res) {
