@@ -24,9 +24,14 @@ app.get("/api/hello", function (req, res) {
 });
 
 app.get("/api/:date", function (req, res) {
-  const date = new Date(req.params.date);
+  let date = new Date(req.params.date);
+  // console.log(date);
+  // console.log(req.params.date);
+  if (date == "Invalid Date" || date == null) {
+    date = new Date(parseInt(req.params.date));
+  }
 
-  if (date == "Invalid Date") {
+  if (date == "Invalid Date" || date == null) {
     res.json({
       error: "Invalid Date",
     });
